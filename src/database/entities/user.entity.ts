@@ -36,10 +36,8 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at' })
   public updated_at: Date;
 
-  @ManyToOne(() => Post, (post) => post.users, {
-    onDelete: 'SET NULL',
-  })
-  postId: Post[];
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 
   @OneToMany(() => Account, (account) => account.user, {
     onDelete: 'SET NULL',

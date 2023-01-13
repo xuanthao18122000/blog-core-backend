@@ -33,10 +33,10 @@ export class Meta {
   @ManyToOne(() => Post, (post) => post.metas, {
     onDelete: 'SET NULL',
   })
-  postId: Post[];
+  post: Post[];
 
-  @OneToMany(() => User, (user) => user.postId)
-  user: User[];
+  // @OneToMany(() => User, (user) => user.postId)
+  // user: User[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

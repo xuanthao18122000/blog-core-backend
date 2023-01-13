@@ -36,13 +36,15 @@ export class Post {
   @Column()
   viewers: number;
 
-  @OneToMany(() => Meta, (meta) => meta.postId)
+  @OneToMany(() => Meta, (meta) => meta.post)
   metas: Meta[];
 
-  @OneToMany(() => User, (user) => user.postId)
-  users: User[];
+  @ManyToOne(() => User, (user) => user.posts, {
+    onDelete: 'SET NULL',
+  })
+  user: User[];
 
-  @OneToMany(() => Comment, (comment) => comment.postId)
+  @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
 
   @ManyToMany(() => Tag, (tag) => tag.posts)

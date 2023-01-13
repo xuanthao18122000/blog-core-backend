@@ -33,7 +33,7 @@ export class Comment {
   @ManyToOne(() => Post, (post) => post.comments, {
     onDelete: 'SET NULL',
   })
-  postId: Post[];
+  post: Post[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

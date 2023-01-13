@@ -29,9 +29,9 @@ export default class CreateUsers implements Seeder {
       .into(User)
       .values([
         {
-          fullName: 'Administrator',
           email: 'minhhung2040@gmail.com',
           password: UtilsProvider.generateHash(md5(md5('Wall68@14'))),
+          fullName: 'Administrator',
           phone: 123456789,
         },
       ])
