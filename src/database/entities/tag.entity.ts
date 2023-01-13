@@ -9,7 +9,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Account } from './account.entity';
+import { Post } from './post.entity';
 import { Role } from 'src/database/entities/role.entity';
 
 @Entity()
@@ -29,8 +29,19 @@ export class Tag {
   @Column()
   slug: string;
 
-  @Column()
-  postId: number; // Many to Many
+  @ManyToMany(() => Post, (post) => post.tags)
+  @JoinTable({
+    name: 'post_tag',
+    joinColumn: {
+      name: 'tag_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'post_id',
+      referencedColumnName: 'id',
+    },
+  })
+  posts: Post[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Account } from './account.entity';
 import { Role } from 'src/database/entities/role.entity';
+import {Post} from "./post.entity";
 
 @Entity()
 export class Comment {
@@ -29,8 +30,10 @@ export class Comment {
   @Column()
   parentId: string;
 
-  @Column()
-  postId: number;
+  @ManyToOne(() => Post, (post) => post.comments, {
+    onDelete: 'SET NULL',
+  })
+  postId: Post[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

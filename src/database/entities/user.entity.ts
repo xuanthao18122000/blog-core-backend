@@ -11,13 +11,14 @@ import {
 } from 'typeorm';
 import { Account } from './account.entity';
 import { Role } from 'src/database/entities/role.entity';
+import { Post } from './post.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 30, unique: true })
   email: string;
 
   @Column()
@@ -34,6 +35,11 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   public updated_at: Date;
+
+  @ManyToOne(() => Post, (post) => post.users, {
+    onDelete: 'SET NULL',
+  })
+  postId: Post[];
 
   @OneToMany(() => Account, (account) => account.user, {
     onDelete: 'SET NULL',

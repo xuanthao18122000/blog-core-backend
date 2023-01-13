@@ -9,8 +9,9 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Account } from './account.entity';
+import { Post } from './post.entity';
 import { Role } from 'src/database/entities/role.entity';
+import {User} from "./user.entity";
 
 @Entity()
 export class Meta {
@@ -29,10 +30,13 @@ export class Meta {
   @Column()
   slug: string;
 
-  @Column() // one to many
-  postId: number;
+  @ManyToOne(() => Post, (post) => post.metas, {
+    onDelete: 'SET NULL',
+  })
+  postId: Post[];
 
-  // Many to Many category with post
+  @OneToMany(() => User, (user) => user.postId)
+  user: User[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

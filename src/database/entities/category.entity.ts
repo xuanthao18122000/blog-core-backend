@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Account } from './account.entity';
 import { Role } from 'src/database/entities/role.entity';
+import {Post} from "./post.entity";
 
 @Entity()
 export class Category {
@@ -32,7 +33,19 @@ export class Category {
   @Column()
   parentId: string;
 
-  // Many to Many category with post
+  @ManyToMany(() => Post, (post) => post.tags)
+  @JoinTable({
+    name: 'post_category',
+    joinColumn: {
+      name: 'category_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'post_id',
+      referencedColumnName: 'id',
+    },
+  })
+  posts: Post[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;

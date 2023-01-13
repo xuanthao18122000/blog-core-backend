@@ -9,8 +9,12 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Account } from './account.entity';
+import { Meta } from './meta.entity';
 import { Role } from 'src/database/entities/role.entity';
+import { Comment } from './comment.entity';
+import { Tag } from './tag.entity';
+import { User } from './user.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Post {
@@ -30,7 +34,22 @@ export class Post {
   summary: string;
 
   @Column()
-  published: string;
+  viewers: number;
+
+  @OneToMany(() => Meta, (meta) => meta.postId)
+  metas: Meta[];
+
+  @OneToMany(() => User, (user) => user.postId)
+  users: User[];
+
+  @OneToMany(() => Comment, (comment) => comment.postId)
+  comments: Comment[];
+
+  @ManyToMany(() => Tag, (tag) => tag.posts)
+  tags: Tag[];
+
+  @ManyToMany(() => Category, (tag) => tag.posts)
+  categories: Category[];
 
   @CreateDateColumn({ name: 'created_at' })
   public created_at: Date;
